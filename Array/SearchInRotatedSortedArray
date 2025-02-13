@@ -1,0 +1,29 @@
+class Solution {
+    public int search(int[] nums, int target) {
+    int left = 0;
+    int right = nums.length - 1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;// Slightly better midpoint calculation
+
+        if (nums[mid] == target) {
+            return mid;
+        }
+
+        if (nums[left] <= nums[mid]) { // Left half is sorted
+            if (nums[left]<=target && target < nums[mid]) {//Target in sorted left half
+                right = mid - 1;
+            } else { // Target in unsorted right half or not present
+                left = mid + 1;
+        }
+        } else { // Right half is sorted
+            if (nums[mid]<target && target<=nums[right]) {//Target in sorted right half
+                left = mid + 1;
+            } else { // Target in unsorted left half or not present
+                right = mid - 1;
+            }
+        }
+    }
+    return -1;
+    }
+}
